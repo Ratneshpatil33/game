@@ -1,0 +1,22 @@
+*{
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+}
+#container {
+    position: relative;
+}
+#container canvas, #score {
+    position: absolute;
+}
+#score{
+    color: white;
+    padding: 20px;
+    font-size: 30px;
+}
+#instruction{
+    float: right;
+    color: white;
+    padding: 20px;
+    font-size: 30px;
+}
