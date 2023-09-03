@@ -167,6 +167,6 @@ function obstacle(){
 function colision(){
     //checking if bounds of obstacle and character are not in a common region
     let x=(char.x+char.width)>o.x && char.x<(o.x+o.w)
-    let y=(char.y+char.height)>o.y 
+    let y=(char.y)<(o.y+o.height)
     return x&&y
 }
