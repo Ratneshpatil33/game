@@ -7,7 +7,7 @@ c.canvas.height=window.innerHeight
 function scoreUpdate(){
     Score.textContent='Score '+score
 }
-
+//Creating obstacle object
 class obj{
     constructor(h,w,x,y,x_vel,y_vel){
         this.h=h
@@ -18,7 +18,7 @@ class obj{
         this.y_vel=y_vel
     }
 }
-
+//Creating player character
 let char,control
 char={
     jump:false,
@@ -30,6 +30,7 @@ char={
     y_velocity:0,
 };
 console.log(c.canvas)
+//Creating Character controller
 control={
     left:false,
     right:false,
@@ -62,21 +63,26 @@ control={
 let collide=false
 let start=false
 let score=0
-
+//Setting up canvas
 c.fillStyle = "#380923";
 c.fillRect(0, 0, window.innerWidth, window.innerHeight);// x, y, width, height
-
+//Updating canvas frames for animation 
 function update(){
+    //Checking State of controller
+    //Jump
     if(control.up && char.jump==false){
         char.y_velocity-=30
         char.jump=true
     }
+    //move left
     if(control.left){
         char.x_velocity-=2
     }
+    //move right
     if(control.right){
         char.x_velocity+=2
     }
+    //Checking of collison has occured
     if(colision()){
         Score.textContent="Score "+score+" "+"Press r to restart"
         collide=true
@@ -86,13 +92,13 @@ function update(){
         c.fill();
         o.x=window.innerWidth
     }
-
+    //Setting values of character according to controller
     char.y_velocity+=1.5
     char.x+=char.x_velocity
     char.y+=char.y_velocity
     char.x_velocity*=0.9
     char.y_velocity*=0.9
-
+    //checking if character hit the ground
     if(char.y>500){
         char.jump=false
         char.y=500
@@ -108,7 +114,7 @@ function update(){
     c.fillStyle = "#380923";
     c.fillRect(0, 0, window.innerWidth, window.innerHeight);// x, y, width, height
 
-    //square
+    //Updating positons of chracter 
     if(start){
     c.fillStyle = "#ff0000";// hex for red
     c.beginPath();
@@ -120,9 +126,11 @@ function update(){
     c.beginPath();
     c.rect(0,500+50, window.innerWidth, 10);
     c.fill();
+    //Start sending object if start flag is true
     if(start){
         obstacle()
     }
+    //Recursively updating the frame
     window.requestAnimationFrame(update)
 }
 document.addEventListener('keydown',control.keyListener,false)
@@ -134,6 +142,7 @@ function obstacle(){
     c.beginPath();
     c.rect(o.x,550-o.h,o.w,o.h);
     c.fill();
+    //setting velocity of obstacle
     if(!collide){
             o.x-=o.x_vel
     }
@@ -142,9 +151,11 @@ function obstacle(){
             score+=1
             scoreUpdate()
             o.x=window.innerWidth
+        //Randomizing each object
         o.x_vel=Math.random()*15+15
         o.h=Math.random()*75+50
         o.w=Math.random()*75+25
+        //updating obstacle position    
         c.fillStyle = "#f000f";
         c.beginPath();
         c.rect(o.x,o.y,o.w,o.h);
@@ -154,6 +165,7 @@ function obstacle(){
     }
 }
 function colision(){
+    //checking if bounds of obstacle and character are not in a common region
     let x=(char.x+char.width)>o.x && char.x<(o.x+o.w)
     let y=(char.y+char.height)>o.y 
     return x&&y
